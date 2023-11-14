@@ -1,0 +1,7 @@
+{
+  "articles_xpath": "//a/@href",
+  "title": "//h1[@class='title']",
+  "body": "//div[@class='body']",
+  "author": "//p[@class='author']",
+  "Date": "//p[@class='date']"
+}

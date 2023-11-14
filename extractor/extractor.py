@@ -1,5 +1,5 @@
 import json
-from lxml import etree\
+from lxml import etree
 import requests
 
 def find_element_by_xpath(html_tree, xpath):
