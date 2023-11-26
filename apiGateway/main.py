@@ -8,7 +8,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 BACKEND_SERVICES = {
-    'backend': 'http://localhost:5001',
+    'site': 'http://127.0.0.1:8000',
 }
 
 @app.route('/api/<service>', methods=['GET', 'POST'])
@@ -16,7 +16,7 @@ def route_requests(service):
 
     #tmp
     print(request.get_data())
-    return jsonify({'worked' :f"200"})
+    print(service)
    
     if service in BACKEND_SERVICES:
         backend_url = BACKEND_SERVICES[service]
@@ -30,6 +30,8 @@ def route_requests(service):
             cookies=request.cookies,
             allow_redirects=False
         )
+        print(response)
+        print(response.json())
         return jsonify(response.json()), response.status_code, response.headers.items()
     else:
         return jsonify({'error': f'Service {service} not found'}, 404)
