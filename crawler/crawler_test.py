@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 import unittest
 from crawler import find_articles
 

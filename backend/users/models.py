@@ -8,7 +8,7 @@ class User(models.Model):
 
 class Site(models.Model):
     id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     domain_url = models.CharField(max_length=255)
     article_xpath = models.CharField(max_length=255)
     title_xpath = models.CharField(max_length=255)

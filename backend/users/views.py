@@ -1,9 +1,26 @@
+# pylint: disable=E1101
+
+
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
+from django.core.serializers import serialize
+
 import json 
 from .models import User, Site
 
 
+def get_sites(request):
+    if request.method == 'GET':
+        try:
+            sites = Site.objects.all().values()
+            sites_list = list(sites)  
+            return JsonResponse(sites_list, safe=False, status=200)
+        except Exception as e:
+            print(str(e))
+            return JsonResponse({'message': str(e)}, status=400)
+    else:
+        return JsonResponse({'message': 'Invalid request method'}, status=405)
+        
 def add_site(request):
     if request.method == 'POST':
         try:

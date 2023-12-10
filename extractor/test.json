@@ -1,0 +1,7 @@
+{
+    "domain": "https://www.bbc.com/sport/tennis/67573907",
+    "title": "//*[@id='page']",
+    "body": "//div[contains(@class, 'qa-story-body')]",
+    "author": "//div[contains(@class, 'story-contributor__body')]/span[contains(@class, 'qa-contributor-name')]",
+    "date": "//time[@class='gs-o-bullet__text qa-status-date gs-u-align-middle gs-u-display-inline']"
+}
