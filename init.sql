@@ -1,0 +1,2 @@
+GRANT ALL PRIVILEGES ON crawled.* TO 'crawl_user'@'%';
+FLUSH PRIVILEGES;
