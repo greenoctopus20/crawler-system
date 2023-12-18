@@ -1,0 +1,36 @@
+<div class="container">
+    <h2>Configuration:</h2>
+  
+    <div class="mb-3">
+      <label for="domainURL" class="form-label">Domain URL:</label>
+      <input type="text" id="domainURL" #domainURL class="form-control">
+    </div>
+  
+    <div class="mb-3">
+      <label for="articles_xpath" class="form-label">Articles XPath:</label>
+      <input type="text" id="articles_xpath" #articlesXpath class="form-control">
+    </div>
+  
+    <div class="mb-3">
+      <label for="title" class="form-label">Title:</label>
+      <input type="text" id="title" #title class="form-control">
+    </div>
+  
+    <div class="mb-3">
+      <label for="body" class="form-label">Body:</label>
+      <input type="text" id="body" #body class="form-control">
+    </div>
+  
+    <div class="mb-3">
+      <label for="author" class="form-label">Author:</label>
+      <input type="text" id="author" #author class="form-control">
+    </div>
+  
+    <div class="mb-3">
+      <label for="Date" class="form-label">Date:</label>
+      <input type="text" id="Date" #date class="form-control">
+    </div>
+  
+    <button (click)="addConfiguration(domainURL.value, articlesXpath.value, title.value, body.value, author.value, date.value)" class="btn btn-primary">Add Configuration</button>
+  </div>
+  

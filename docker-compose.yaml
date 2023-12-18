@@ -25,6 +25,18 @@ services:
     volumes:
       - mysql_data_crawled:/var/lib/mysql 
 
+  db_extracted:
+    image: mysql:latest
+    ports:
+      - "3002:3306"
+    environment:
+      MYSQL_DATABASE: extracted
+      MYSQL_USER: user003
+      MYSQL_PASSWORD: user_password_01//-_
+      MYSQL_ROOT_PASSWORD: exctract_root_password  
+    volumes:
+      - mysql_data_extracted:/var/lib/mysql 
+
   rabbitmq:
     image: rabbitmq:management
     ports:
@@ -40,4 +52,5 @@ services:
 volumes:
   mysql_data: 
   mysql_data_crawled:
+  mysql_data_extracted:
   rabbitmq_data:

@@ -1,0 +1,11 @@
+/* Example CSS to style the domain as a link */
+a.site-link {
+    color: blue; /* Set link color */
+    text-decoration: underline; /* Underline the text */
+    cursor: pointer; /* Show cursor as pointer on hover */
+  }
+  
+  a.site-link:hover {
+    color: darkblue; /* Change color on hover */
+    text-decoration: underline; /* Maintain underline on hover */
+  }

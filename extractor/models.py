@@ -30,7 +30,7 @@ class articles(Base):
 
 existing_tables = Base.metadata.tables
 
-if 'crawled' not in existing_tables:
+if 'articles' not in existing_tables:
     Base.metadata.create_all(engine)
 
 if __name__ == '__main__':

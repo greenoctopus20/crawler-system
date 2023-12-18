@@ -1,0 +1,18 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <ul class="nav nav-tabs">
+        <!-- Overview Button -->
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="router.url === '/'" (click)="navigateToOverview()">Overview</a>
+        </li>
+        <!-- Configuration Button -->
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="router.url === '/configuration'" (click)="navigateToConfiguration()">Add sites</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  
+  <!-- Router Outlet for rendering the selected component content -->
+  <router-outlet></router-outlet>
+  

@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="site-info">
+      <h2>Site Information</h2>
+      <p><strong>Domain:</strong> {{ siteInfo.domain }}</p>
+    </div>
+  
+    <div class="site-articles">
+      <h2>Extracted Articles</h2>
+      <div *ngFor="let article of siteArticles" class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Article URL: {{ article.url }}</h5>
+          <p class="card-text">Article Body: {{ article.body }}</p>
+          <p class="card-text">Article Author: {{ article.author }}</p>
+          <p class="card-text">Article Date: {{ article.date }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  

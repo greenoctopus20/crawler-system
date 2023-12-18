@@ -1,0 +1,25 @@
+<br>
+<div class="container">
+    <h1>Overview</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Source</th>
+          <th>Articles Extracted</th>
+          <th>Failed Articles</th>
+          <th>Last Extracted</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let site of sites">
+          <td>
+            <!-- Remove href="#" and handle navigation on click -->
+            <a class="site-link" (click)="navigateToSite(site.id)">{{ site.domain }}</a>
+          </td>
+          <td>{{ site.articlesExtracted }}</td>
+          <td>{{ site.failedArticles }}</td>
+          <td>{{ site.lastExtracted }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
