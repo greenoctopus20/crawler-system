@@ -9,6 +9,8 @@ app = Flask(__name__)
 CORS(app)
 BACKEND_SERVICES = {
     'site': 'http://127.0.0.1:8000',
+    'getSites': 'http://127.0.0.1:8000',
+    'articles': 'http://127.0.0.1:8000',
 }
 
 @app.route('/api/<service>', methods=['GET', 'POST'])

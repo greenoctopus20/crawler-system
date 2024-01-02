@@ -8,13 +8,40 @@ from .rabbitmq import produce_message
 import json 
 from .models import User, Site
 
+def articles_per_site(request):
+    articles = []
+    articles.append(
+        {
+            "url": 'article1.com',
+            "body": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            "author": 'John Doe',
+            "date": '2023-,01-01'
+        }
+    )
+    json_object = json.dumps(articles, indent = 4)
+    return JsonResponse(json_object, safe=False, status=200)
+    
+
+def get_overview():
+    data = []
+    sites = Site.objects.all()
+    for site in sites:
+        tmp = {
+            "id" : site.id,
+            "domain" : site.domain_url,
+            "articlesExtracted" : 0,
+            "failedArticles" : 0, 
+            "lastExtracted" : "2023-12-14",
+        }
+        data.append(tmp)
+    return data
 
 def get_sites(request):
     if request.method == 'GET':
-        try:
-            sites = Site.objects.all().values()
-            sites_list = list(sites)  
-            return JsonResponse(sites_list, safe=False, status=200)
+        try:    
+            data = get_overview()
+            json_object = json.dumps(data, indent = 4)
+            return JsonResponse(json_object, safe=False, status=200)
         except Exception as e:
             print(str(e))
             return JsonResponse({'message': str(e)}, status=400)

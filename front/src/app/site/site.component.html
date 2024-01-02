@@ -1,11 +1,14 @@
 <div class="container">
+    <br>
     <div class="site-info">
       <h2>Site Information</h2>
+      <br>
       <p><strong>Domain:</strong> {{ siteInfo.domain }}</p>
+      <br>
     </div>
   
     <div class="site-articles">
-      <h2>Extracted Articles</h2>
+      <h4>Extracted Articles</h4>
       <div *ngFor="let article of siteArticles" class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">Article URL: {{ article.url }}</h5>
