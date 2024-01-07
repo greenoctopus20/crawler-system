@@ -5,8 +5,11 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.core.serializers import serialize
 from .rabbitmq import produce_message
+from django.forms.models import model_to_dict
 import json 
+import msgpack
 from .models import User, Site
+import pickle
 
 def articles_per_site(request):
     articles = []
@@ -79,3 +82,14 @@ def add_site(request):
             return JsonResponse({'message': str(e)}, status=400)
     else:
         return JsonResponse({'message': 'Invalid request method'}, status=405)
+
+
+def run(request):
+    site = Site.objects.get(id=9)
+    data = model_to_dict(site)
+    data = pickle.dumps(data)
+    #data = json.dumps(data.decode, separators=(',', ':'))
+    #print(data)
+    #data = msgpack.packb(data)
+    produce_message(data)
+    return JsonResponse({'message': 'testing'}, status=200)

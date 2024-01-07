@@ -3,7 +3,7 @@ import pika
 def connect():
     try:
         credentials = pika.PlainCredentials('rabbit_mq_user', 'rabbit_mq_password')
-        parameters = pika.ConnectionParameters('localhost', 5672, '/', credentials)
+        parameters = pika.ConnectionParameters('172.21.0.1', 5672, '/', credentials)
         connection = pika.BlockingConnection(parameters)
         return connection.channel()
     except Exception as e:
@@ -26,7 +26,32 @@ def produce_message(message):
     finally:
         if channel:
             channel.close()
+            
+            
+def consume_message(callBack):
+    channel = connect()
+    if channel is None:
+        return False
 
+    try:
+        channel.queue_declare(queue='to_crawl', durable=True)
+        channel.basic_consume(queue='to_crawl', on_message_callback=callBack, auto_ack=True)
+        print("Waiting for messages. To exit press CTRL+C")
+        channel.start_consuming()
+        return True
+    except Exception as e:
+        print(f"Exception while consuming message: {str(e)}")
+        return False
+    finally:
+        if channel:
+            channel.close()
+
+def callback(ch, method, properties, body):
+    print(f"Received '{body}' from 'to_crawl' queue")
+    
+    
 if __name__ == '__main__':
     print("testing rabbit mq")
-    produce_message("Test1")
+    produce_message("test2")
+    produce_message("test3")
+    consume_message(callBack=callback)

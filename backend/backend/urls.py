@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/site', views.add_site),
     path('api/getSites', views.get_sites),
-    path('api/articles', views.articles_per_site)
+    path('api/articles', views.articles_per_site),
+    path("api/run", views.run),
 ]
