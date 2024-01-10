@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: news-site-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: news-site
+  template:
+    metadata:
+      labels:
+        app: news-site
+    spec:
+      containers:
+      - name: news-site-container
+        image: ucefpingo/news-site  # Replace with your Docker image path
+        ports:
+        - containerPort: 9000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: news-site-service
+spec:
+  selector:
+    app: news-site
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9000
+  type: LoadBalancer  # Exposes the service outside the cluster
