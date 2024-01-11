@@ -1,9 +1,11 @@
 version: '3'
+
 services:
-  web:
+  crawler:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "400:400"
+    image: ucefpingo/extractor:latest
+    volumes:
+      - .:/app
 
