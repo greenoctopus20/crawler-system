@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: news-site-container
-        image: ucefpingo/news-site  # Replace with your Docker image path
+        image: ucefpingo/news-site 
         ports:
         - containerPort: 9000
 

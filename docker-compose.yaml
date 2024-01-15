@@ -48,6 +48,12 @@ services:
       RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "-rabbitmq_management_agent.disable_metrics_collector=false"
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - my_custom_network 
+networks:
+  my_custom_network: # Defining a custom network for your services
+    driver: bridge
+
       
 volumes:
   mysql_data: 

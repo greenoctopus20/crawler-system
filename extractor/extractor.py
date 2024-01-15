@@ -1,6 +1,10 @@
 import json
 from lxml import etree, html
 import requests
+from rabbitmq import consume_message , produce_message
+from pprint import pprint
+from models import Session, articles
+import time
 
 def read_json_file(file_path):
     with open(file_path, 'r') as json_file:
@@ -9,10 +13,13 @@ def read_json_file(file_path):
 
 
 def find_element_by_xpath(html_tree, xpath):
-    element = html_tree.xpath(xpath)
-    if element:
-        element_text = element[0].text.strip() if element[0].text else element[0].text_content().strip()
-        return element_text
+    try:
+        elements = html_tree.xpath(xpath)
+        if elements:
+            element_text = elements[0].text_content().strip() if elements[0].text else elements[0].strip()
+            return element_text
+    except Exception as E:
+        print(f"SOMETHING WRONG {E}")
     print(f" Couldn't find {xpath}")
     return None
 
@@ -22,25 +29,54 @@ def get_html_from_url(url):
         response = requests.get(url)
         response.raise_for_status()  # Raise an error for bad HTTP responses
         html = response.text
-        #print(html)
+        print(len(html))
         return html
     except requests.exceptions.RequestException as e:
         print(f"Error: {e}")
         return None
 
+
+def save_article(title, article_body, url, author=None, date=None ):
+        session = Session()
+        new_record = articles(
+            site_id=1,
+            url=url,
+            title=title,
+            author=author,
+            body=article_body,
+            date=date
+        )
+        session.add(new_record)
+        session.commit()
+        print(f"New Article Saved with tile {title}")
+
+def process(ch, method, properties, body):
+    print("Received A message")
+    print("***********")
+    # json_data = json.loads(body)
+    payload = json.loads(body)
+    print(payload)
+    print("***********")
+    
+    #try:
+    for link in payload['links']:
+        print(link)
+        html_source = get_html_from_url(link)
+        if html_source:
+            html_etree = html.fromstring(html_source)
+            title = find_element_by_xpath(html_etree, payload['title_xpath'])
+            article_body = find_element_by_xpath(html_etree, payload['body_xpath'])
+            author = find_element_by_xpath(html_etree, payload['author_xpath']) 
+            date = find_element_by_xpath(html_etree, payload['date_xpath'])                
+            if title and article_body:
+                save_article(title, article_body, link, author, date)
+                formatted_article = f"Link: {link}\nTitle: {title}\nAuthor: {author}\nDate: {date}\n\n{article_body}\n"
+                print(formatted_article)
+    #except Exception as e:
+    #    print(e)
+
 if __name__ == "__main__":
-    json_data = read_json_file('test.json')
-    domain = json_data['domain']
-    html_source = get_html_from_url(domain)
-
-    html_etree = html.fromstring(html_source)
-    title = find_element_by_xpath(html_etree, json_data['title'])
-    body = find_element_by_xpath(html_etree, json_data['body'])
-    author = find_element_by_xpath(html_etree, json_data['author'])
-    date = find_element_by_xpath(html_etree, json_data['date'])
-
-    if title and body:
-        
-        formatted_article = f"Domain: {domain}\nTitle: {title}\nAuthor: {author}\nDate: {date}\n\n{body}\n"
-        print(formatted_article)
+    #json_data = read_json_file('test.json')
+    #produce_message(json_data)
+    consume_message(callBack=process)
     

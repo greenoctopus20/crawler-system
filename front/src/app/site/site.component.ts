@@ -20,7 +20,7 @@ export class SiteComponent implements OnInit {
       this.siteId = +params['id']; 
     });
 
-    this.http.get<any[]>('http://127.0.0.1:8080/api/articles') 
+    this.http.get<any[]>('http://127.0.0.1:8080/api/articles/1') 
     .subscribe(
       (response: any) => {
         console.log(response);  

@@ -86,7 +86,19 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'defaultdb',
+        'USER': 'doadmin',
+        'PASSWORD': 'AVNS_VQ6ICJAz3PnxBkncK1e',
+        'HOST': 'mysql-database-cluster-do-user-15555854-0.c.db.ondigitalocean.com',  
+        'PORT': '25060', 
+    }
+}
 
+
+""" 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -98,6 +110,7 @@ DATABASES = {
     }
 }
 
+ """
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 

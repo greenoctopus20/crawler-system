@@ -1,6 +1,6 @@
 # pylint: disable=E1101
 
-
+from .articles_helper import Session, articles
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.core.serializers import serialize
@@ -10,18 +10,25 @@ import json
 import msgpack
 from .models import User, Site
 import pickle
+from .articles_helper import Session, getArticles , articles
 
-def articles_per_site(request):
-    articles = []
-    articles.append(
-        {
-            "url": 'article1.com',
-            "body": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-            "author": 'John Doe',
-            "date": '2023-,01-01'
-        }
-    )
-    json_object = json.dumps(articles, indent = 4)
+
+
+
+def articles_per_site(request, id):
+    
+    articles_data = getArticles(1)  # Assuming '1' is the site_id
+
+    transformed_data = []
+    for article in articles_data:
+        transformed_data.append({
+            "url": article.url,
+            "body": article.body,
+            "author": article.author,
+            "date": article.date
+        })
+
+    json_object = json.dumps(transformed_data, indent=4)
     return JsonResponse(json_object, safe=False, status=200)
     
 
@@ -88,8 +95,40 @@ def run(request):
     site = Site.objects.get(id=9)
     data = model_to_dict(site)
     data = pickle.dumps(data)
-    #data = json.dumps(data.decode, separators=(',', ':'))
-    #print(data)
-    #data = msgpack.packb(data)
     produce_message(data)
     return JsonResponse({'message': 'testing'}, status=200)
+
+def runSite(request, id):
+        if request.method in ['POST', 'GET'] and id is not None:
+            try:               
+                target = Site.objects.get(id=id)
+                processSite(target)
+                return JsonResponse({"message": "Site is running "}, status=200)
+            except Exception as E:
+                print(E)
+                return JsonResponse({'message': 'Failled to run site'}, status=500)
+        else:
+            return JsonResponse({'message': 'Method not allowed'}, status=500)
+            
+def deleteSite(request, id):
+    try:
+        if request.method in ['POST', 'GET'] and id is not None:
+            print(id)
+            try:
+                target = Site.objects.get(id=id)
+                target.delete()
+                return JsonResponse({'message': 'Site is Deleted'}, status=200)
+            except Exception as E:
+                print(E)
+                return JsonResponse({'message': "something wrong"}, status=500)
+        else: 
+            return JsonResponse({'message': 'Method not allowed'}, status=500)
+    except Exception as E:
+        print(E)
+        return JsonResponse({'message': E}, status=500)
+   
+def processSite(site):
+    data = model_to_dict(site)
+    data = pickle.dumps(data)
+    produce_message(data)
+    

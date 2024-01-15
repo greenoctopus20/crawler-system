@@ -20,8 +20,8 @@ export class SiteOverviewComponent implements OnInit {
     this.http.get<any[]>('http://127.0.0.1:8080/api/getSites') 
     .subscribe(
       (response: any) => {
-        console.log(response);  
-        console.log(typeof response);
+        //console.log(response);  
+        //console.log(typeof response);
 
         // Check if response is a string and parse it
         if (typeof response === 'string') {
@@ -44,12 +44,44 @@ export class SiteOverviewComponent implements OnInit {
         }
       },
       (error) => {
+        this.sites = []
         console.log('Error sending GET request:', error);
       }
     );
   }
 
-  title = 'front-end';
+  runSite(siteId: number): void {
+    console.log('Running site with ID:', siteId);
+    this.http.get('http://127.0.0.1:8080/api/runSite/' + siteId, {responseType: 'text'}) 
+    .subscribe(
+        (response: any) => {
+            alert("Site is running, might take few seconds to get results");
+            console.log(response);
+      },
+      (error) => {
+        alert("not working");
+        console.log(error);
+      }
+    );
+  }
+
+  deleteSite(siteId: number): void {
+    // Call the API or perform actions to run the site with the provided ID
+    this.http.get('http://127.0.0.1:8080/api/deleteSite/' + siteId, {responseType: 'text'}) 
+    .subscribe(
+        (response: any) => {
+        console.log(response);
+        window.location.reload();
+      },
+      (error) => {
+        alert("error");
+        console.log(error);
+      }
+    );
+    
+    // Add your logic here to run the site
+  }
+  title = 'Octopus';
   /* sites = [
         {
           id: 1,

@@ -20,8 +20,11 @@ from users import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/site', views.add_site),
+    path('api/site', views.add_site), # Add site
     path('api/getSites', views.get_sites),
-    path('api/articles', views.articles_per_site),
-    path("api/run", views.run),
+    path('api/deleteSite/<int:id>', views.deleteSite),
+    path('api/runSite/<int:id>', views.runSite),
+    path('api/articles/<int:id>', views.articles_per_site),
+    path("api/run", views.run),  # Just a Test
+    
 ]

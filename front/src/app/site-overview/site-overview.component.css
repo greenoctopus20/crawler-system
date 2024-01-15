@@ -9,3 +9,16 @@ a.site-link {
     color: darkblue; /* Change color on hover */
     text-decoration: underline; /* Maintain underline on hover */
   }
+
+  /* Define styles for the "Run" button */
+.run-button {
+    background-color: green;
+    color: white;
+  }
+  
+  /* Define styles for the "Delete" button */
+  .delete-button {
+    background-color: red;
+    color: white;
+  }
+  
