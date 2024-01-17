@@ -16,19 +16,25 @@ The API Gateway is built using Flask and forwards traffic to the backend.
 
 - Directory: `apiGateway/`
 
-### 3. Backend
+### 3. Site service
 
-The backend is developed in Django and produces messages to RabbitMQ.
+The Site Service is developed in Django and produces messages to RabbitMQ.
 
-- Directory: `backend/`
+- Directory: `SiteService/`
 
-### 4. Crawler
+### 4. Article service
+
+The Site Service is developed in Django and produces messages to RabbitMQ.
+
+- Directory: `ArticleService/`
+
+### 5. Crawler
 
 The crawler component consumes messages and produces messages to the extractor.
 
 - Directory: `crawler/`
 
-### 5. Extractor
+### 6. Extractor
 
 - Directory: `extractor/`
 
