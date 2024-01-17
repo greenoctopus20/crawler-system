@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SiteComponent implements OnInit {
   siteId!: number;
-  siteInfo: { domain: string } = { domain: 'dutchnews.nl' };
+  domain: string = '';
   siteArticles: { url: string, body: string, author: string, date: string }[] = [];
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
@@ -20,7 +20,7 @@ export class SiteComponent implements OnInit {
       this.siteId = +params['id']; 
     });
 
-    this.http.get<any[]>('http://127.0.0.1:8080/api/articles/1') 
+    this.http.get<any[]>('http://127.0.0.1:8080/api/articles/' + this.siteId) 
     .subscribe(
       (response: any) => {
         console.log(response);  
@@ -33,14 +33,22 @@ export class SiteComponent implements OnInit {
 
         // Check if response is an array before using map
         if (Array.isArray(response)) {
-          this.siteArticles = response.map((item) => {
-            return {
-              url: item.url,
-              body: item.body,
-              author: item.author,
-              date: item.date
-            };
-          });
+            const domainInfo = response.find(item => item.domain);
+            if (domainInfo) {
+              this.domain = domainInfo.domain.toString();
+            }
+            
+            const filteredArticles = response.filter(item => !item.domain);
+
+            // Map the remaining articles to the siteArticles array
+            this.siteArticles = filteredArticles.map(item => {
+                return {
+                    url: item.url,
+                    body: item.body,
+                    author: item.author,
+                    date: item.date
+                };
+            });
         } else {
           console.error('Response is not an array:', response);
         }

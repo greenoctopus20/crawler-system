@@ -10,6 +10,12 @@
           <a class="nav-link" [class.active]="router.url === '/configuration'" (click)="navigateToConfiguration()">Add sites</a>
         </li>
       </ul>
+      <ul class="nav nav-tabs ml-auto"> <!-- Align items to the right -->
+        <li class="nav-item">
+          <a class="nav-link" (click)="logout()">Log out</a>
+        </li>
+      </ul>
+
     </div>
   </nav>
   
