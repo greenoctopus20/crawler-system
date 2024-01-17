@@ -14,24 +14,7 @@ from .articles_helper import Session, getArticles , articles
 
 
 
-
-def articles_per_site(request, id):
     
-    articles_data = getArticles(1)  # Assuming '1' is the site_id
-
-    transformed_data = []
-    for article in articles_data:
-        transformed_data.append({
-            "url": article.url,
-            "body": article.body,
-            "author": article.author,
-            "date": article.date
-        })
-
-    json_object = json.dumps(transformed_data, indent=4)
-    return JsonResponse(json_object, safe=False, status=200)
-    
-
 def get_overview():
     data = []
     sites = Site.objects.all()

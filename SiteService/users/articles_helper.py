@@ -2,11 +2,11 @@ from sqlalchemy import Column, Integer, String, Date, Text, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-DB_USER = 'user003'
-DB_PASSWORD = 'user_password_01//-_'
-DB_HOST = '127.0.0.1'
-DB_PORT = '3002'
-DB_NAME = 'extracted'
+DB_USER = 'doadmin'
+DB_PASSWORD = 'AVNS_VQ6ICJAz3PnxBkncK1e'
+DB_HOST = 'mysql-database-cluster-do-user-15555854-0.c.db.ondigitalocean.com'
+DB_PORT = '25060'
+DB_NAME = 'defaultdb'
 
 DATABASE_URL = f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 #print(DATABASE_URL)

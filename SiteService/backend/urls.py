@@ -24,7 +24,6 @@ urlpatterns = [
     path('api/getSites', views.get_sites),
     path('api/deleteSite/<int:id>', views.deleteSite),
     path('api/runSite/<int:id>', views.runSite),
-    path('api/articles/<int:id>', views.articles_per_site),
     path("api/run", views.run),  # Just a Test
     
 ]

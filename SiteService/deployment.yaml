@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: site_service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: site_service
+  template:
+    metadata:
+      labels:
+        app: site_service
+    spec:
+      containers:
+      - name: site_service
+        image: ucefpingo/site_service:latest 
+        ports:
+        - containerPort: 8000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: Site_Service
+spec:
+  selector:
+    app: site_service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+  type: LoadBalancer  # Exposes the service outside the cluster

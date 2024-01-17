@@ -1,13 +1,13 @@
 version: '3'
 
 services:
-  article_service:
+  site_service:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
-    image: ucefpingo/article_service:latest
+    image: ucefpingo/site_service:latest
     volumes:
       - .:/app
 
