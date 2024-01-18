@@ -22,5 +22,5 @@ jobs:
 
     - name: Build and Push Docker Image
       run: |
-        docker build -t usefpingo/crawler -f crawler/Dockerfile .
+        docker build -t usefpingo/crawler -f ./crawler/Dockerfile .
         docker push usefpingo/crawler
