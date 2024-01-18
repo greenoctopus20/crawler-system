@@ -20,7 +20,10 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_TOKEN }}
 
-    - name: Build and Push Docker Image
-      run: |
-        docker build -t usefpingo/crawler -f ./crawler/Dockerfile .
-        docker push usefpingo/crawler
+    - name: Build and push
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+          file: ./crawler/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/crawler:latest
