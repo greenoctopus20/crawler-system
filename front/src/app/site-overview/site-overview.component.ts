@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; // Import Router
 import { HttpClient } from '@angular/common/http';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-site-overview',
@@ -8,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './site-overview.component.css',
 })
 export class SiteOverviewComponent implements OnInit {
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient, private keycloak: KeycloakService) {}
 
   navigateToSite(id: number): void {
     this.router.navigate([`/sites/${id}`]);
@@ -17,37 +18,53 @@ export class SiteOverviewComponent implements OnInit {
   sites: any[] = [];
 
   ngOnInit(): void {
-    this.http.get<any[]>('http://127.0.0.1:8080/api/getSites') 
+    
+    const username = this.keycloak.getUsername();
+
+    const requestBody = {
+        username : username
+    };
+    this.http.post('http://127.0.0.1:8080/api/user', requestBody, { responseType: 'text' }) 
     .subscribe(
-      (response: any) => {
-        //console.log(response);  
-        //console.log(typeof response);
-
-        // Check if response is a string and parse it
-        if (typeof response === 'string') {
-          response = JSON.parse(response);
+        (response: any) => {
+            //alert("username posted");
+        },
+        (error) => {
+          //alert("username not posted");
         }
+      );
 
-        // Check if response is an array before using map
-        if (Array.isArray(response)) {
-          this.sites = response.map((item) => {
-            return {
-              id: item.id,
-              domain: item.domain,
-              articlesExtracted: item.articlesExtracted,
-              failedArticles: item.failedArticles,
-              lastExtracted: item.lastExtracted
-            };
-          });
-        } else {
-          console.error('Response is not an array:', response);
+      this.http.get<any[]>(`http://127.0.0.1:8080/api/getSites/${username}`, {
+    }).subscribe(
+        (response: any) => {
+          //console.log(response);  
+          //console.log(typeof response);
+  
+          // Check if response is a string and parse it
+          if (typeof response === 'string') {
+            response = JSON.parse(response);
+          }
+  
+          // Check if response is an array before using map
+          if (Array.isArray(response)) {
+            this.sites = response.map((item) => {
+              return {
+                id: item.id,
+                domain: item.domain,
+                articlesExtracted: item.articlesExtracted,
+                failedArticles: item.failedArticles,
+                lastExtracted: item.lastExtracted
+              };
+            });
+          } else {
+            console.error('Response is not an array:', response);
+          }
+        },
+        (error) => {
+          this.sites = []
+          console.log('Error sending GET request:', error);
         }
-      },
-      (error) => {
-        this.sites = []
-        console.log('Error sending GET request:', error);
-      }
-    );
+      );
   }
 
   runSite(siteId: number): void {

@@ -1,33 +1,38 @@
-<br>
 <div class="container">
-    <h2>Overview</h2>
-    <br>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Source</th>
-          <th>Articles Extracted</th>
-          <th>Failed Articles</th>
-          <th>Last Extracted</th>
-          <th>Action</th> <!-- New column for the button -->
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let site of sites">
-          <td>
-            <!-- Remove href="#" and handle navigation on click -->
-            <a class="site-link" (click)="navigateToSite(site.id)">{{ site.domain }}</a>
-          </td>
-          <td>{{ site.articlesExtracted }}</td>
-          <td>{{ site.failedArticles }}</td>
-          <td>{{ site.lastExtracted }}</td>
-          <td>
-            <!-- Add a button to run the site -->
-            <button class="action-button run-button" (click)="runSite(site.id)">Run</button>
-            <span style="width: 0.5cm; display: inline-block;"></span>
-            <button class="action-button delete-button" (click)="deleteSite(site.id)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-</div>
+    <ng-container *ngIf="sites.length > 0; else noDataMessage">
+      <h2>Overview</h2>
+      <br>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Source</th>
+            <th>Articles Extracted</th>
+            <th>Failed Articles</th>
+            <th>Last Extracted</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let site of sites">
+            <td>
+              <a class="site-link" (click)="navigateToSite(site.id)">{{ site.domain }}</a>
+            </td>
+            <td>{{ site.articlesExtracted }}</td>
+            <td>{{ site.failedArticles }}</td>
+            <td>{{ site.lastExtracted }}</td>
+            <td>
+              <button class="action-button run-button" (click)="runSite(site.id)">Run</button>
+              <span style="width: 0.5cm; display: inline-block;"></span>
+              <button class="action-button delete-button" (click)="deleteSite(site.id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+  
+    <ng-template #noDataMessage>
+        <br>
+      <h4>You are new or deleted your data.</h4>
+    </ng-template>
+  </div>
+  
