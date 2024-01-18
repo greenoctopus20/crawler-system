@@ -28,3 +28,15 @@ jobs:
 
     - name: Push Docker image
       run: docker push ucefpingo/crawler:latest
+
+      
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+  
+    - name: Save DigitalOcean kubeconfig with short-lived credentials
+      run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 octopus-cluster-youssef
+      
+    - name: Show deployment
+      run: kubectl get deployment
