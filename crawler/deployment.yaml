@@ -15,4 +15,6 @@ spec:
       containers:
       - name: crawler-container
         image: ucefpingo/crawler
+        imagePullPolicy: Always
+
 
