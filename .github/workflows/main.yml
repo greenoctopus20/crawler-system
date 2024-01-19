@@ -51,8 +51,9 @@ jobs:
       run: |
             python -m pip install --upgrade pip
             pip install -r crawler/requirements.txt
+            python /crawler/test.py -v
             
-    - uses: actions/checkout@v4
-    - name: Run tests 
-      run: python crawler/test.py -v
-      working-directory: ./ 
+    #- uses: actions/checkout@v4
+    #- name: Run tests 
+    #  run: python crawler/test.py -v
+    #  working-directory: ./ 
