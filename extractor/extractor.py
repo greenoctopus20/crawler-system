@@ -36,10 +36,10 @@ def get_html_from_url(url):
         return None
 
 
-def save_article(title, article_body, url, author=None, date=None ):
+def save_article(id, title, article_body, url, author=None, date=None ):
         session = Session()
         new_record = articles(
-            site_id=1,
+            site_id=id,
             url=url,
             title=title,
             author=author,
@@ -69,7 +69,7 @@ def process(ch, method, properties, body):
             author = find_element_by_xpath(html_etree, payload['author_xpath']) 
             date = find_element_by_xpath(html_etree, payload['date_xpath'])                
             if title and article_body:
-                save_article(title, article_body, link, author, date)
+                save_article(payload['id'],title, article_body, link, author, date)
                 formatted_article = f"Link: {link}\nTitle: {title}\nAuthor: {author}\nDate: {date}\n\n{article_body}\n"
                 print(formatted_article)
     #except Exception as e:

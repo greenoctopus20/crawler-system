@@ -36,7 +36,7 @@ def consume_message(callBack):
     try:
         channel.queue_declare(queue='to_extract', durable=True)
         channel.basic_consume(queue='to_extract', on_message_callback=callBack, auto_ack=True)
-        print("EXTRACTOR: Waiting for messages. To exit press CTRL+C")
+        print(" *** EXTRACTOR STARTED *** \n  Waiting for messages. To exit press CTRL+C")
         channel.start_consuming()
         return True
     except Exception as e:

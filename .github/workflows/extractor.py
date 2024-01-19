@@ -27,12 +27,12 @@ jobs:
     - name: Install dependencies
       run: |
             python -m pip install --upgrade pip
-            pip install -r crawler/requirements.txt
+            pip install -r extractor/requirements.txt
             
             
-    - uses: actions/checkout@v4
-    - name: Run tests 
-      run: python crawler/test.py -v
+    #- uses: actions/checkout@v4
+    #- name: Run tests 
+    #  run: python crawler/test.py -v
       
     - name: Check out code
       uses: actions/checkout@v2
@@ -41,11 +41,11 @@ jobs:
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_TOKEN }}
         
     - name: Build Docker image
-      run: docker build -t ucefpingo/crawler -f crawler/Dockerfile .
+      run: docker build -t ucefpingo/extractor -f extractor/Dockerfile .
 
 
     - name: Push Docker image
-      run: docker push ucefpingo/crawler:latest
+      run: docker push ucefpingo/extractor:latest
 
       
     - name: Install doctl
@@ -57,6 +57,6 @@ jobs:
       run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 octopus-cluster-youssef
       
     - name: Rollout deployment
-      run: kubectl rollout restart deployment crawler-deployment
+      run: kubectl rollout restart deployment extractor-deployment
 
     
