@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Test/Build/Push/Deploy extractor 
 
 on:
   push:
@@ -11,18 +11,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    #- name: Checkout code
+    #  uses: actions/checkout@v2
+
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies
+      run: |
+            python -m pip install --upgrade pip
+            pip install -r crawler/requirements.txt
+            python /crawler/test.py -v
+            
+    #- uses: actions/checkout@v4
+    - name: Run tests 
+      run: python crawler/test.py -v
       
     - name: Check out code
       uses: actions/checkout@v2
       
     - name: Login to Docker Hub
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_TOKEN }}
-      
-    - name: List files in the repository
-      run: ls -al
-      
+        
     #- name: Build Docker image
     #  run: docker build -t ucefpingo/crawler -f crawler/Dockerfile .
 
@@ -41,19 +54,5 @@ jobs:
     - name: Show deployment
       run: kubectl get deployment
 
-    - uses: actions/checkout@v4
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
-        
-    - name: Install dependencies
-      run: |
-            python -m pip install --upgrade pip
-            pip install -r crawler/requirements.txt
-            python /crawler/test.py -v
-            
-    #- uses: actions/checkout@v4
-    #- name: Run tests 
-    #  run: python crawler/test.py -v
+    
     #  working-directory: ./ 
