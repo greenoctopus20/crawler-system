@@ -55,4 +55,4 @@ jobs:
     - uses: actions/checkout@v4
     - name: Run tests 
       run: python crawler/test.py -v
-      working-directory: ./crawler 
+      working-directory: ./ 
