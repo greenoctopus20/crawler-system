@@ -39,8 +39,15 @@ jobs:
     - name: Build Docker image
       run: docker build -t ucefpingo/crawler -f crawler/Dockerfile .
 
+    - name: Set version
+      id: version
+      run: echo "VERSION=$(($(cat version || echo 0) + 1))" > $GITHUB_ENV
+
+    - name: Tag Docker image with version
+      run: docker tag ucefpingo/crawler ucefpingo/crawler:${{ steps.version.outputs.VERSION }}
+
     - name: Push Docker image
-      run: docker push ucefpingo/crawler:${{github.ref_name}}
+      run: docker push ucefpingo/crawler:${{ steps.version.outputs.VERSION }}
 
       
     - name: Install doctl
