@@ -43,15 +43,9 @@ jobs:
     - name: Build Docker image
       run: docker build -t ucefpingo/crawler -f crawler/Dockerfile .
 
-    - name: Set version
-      id: version
-      run: echo "VERSION=$(($(cat version || echo 0) + 1))" > $GITHUB_ENV
-
-    - name: Tag Docker image with version
-      run: docker tag ucefpingo/crawler ucefpingo/crawler:${{ steps.version.outputs.VERSION }}
 
     - name: Push Docker image
-      run: docker push ucefpingo/crawler:${{ steps.version.outputs.VERSION }}
+      run: docker push ucefpingo/crawler:latest
 
       
     - name: Install doctl
@@ -62,8 +56,7 @@ jobs:
     - name: Save DigitalOcean kubeconfig with short-lived credentials
       run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 octopus-cluster-youssef
       
-    - name: Show deployment
-      run: kubectl get deployment
+    - name: Rollout deployment
+      run: kubectl rollout restart deployment crawler-deployment
 
     
-    #  working-directory: ./ 
