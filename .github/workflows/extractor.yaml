@@ -36,11 +36,11 @@ jobs:
     - name: Login to Docker Hub
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_TOKEN }}
         
-    #- name: Build Docker image
-    #  run: docker build -t ucefpingo/crawler -f crawler/Dockerfile .
+    - name: Build Docker image
+      run: docker build -t ucefpingo/crawler -f crawler/Dockerfile .
 
-    #- name: Push Docker image
-    #  run: docker push ucefpingo/crawler:latest
+    - name: Push Docker image
+      run: docker push ucefpingo/crawler:${{github.ref_name}}
 
       
     - name: Install doctl
