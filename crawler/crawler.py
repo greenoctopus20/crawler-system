@@ -46,10 +46,9 @@ def get_html_from_url(url):
         response = requests.get(url)
         response.raise_for_status()  # Raise an error for bad HTTP responses
         html = response.text
-        print(len(html))
         return html
     except requests.exceptions.RequestException as e:
-        print(f"Error: {e}")
+        #print(f"Error: {e}")
         return None
 
 def save_html(html, body):
