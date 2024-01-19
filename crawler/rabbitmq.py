@@ -36,7 +36,7 @@ def consume_message(callBack):
     try:
         channel.queue_declare(queue='to_crawl', durable=True)
         channel.basic_consume(queue='to_crawl', on_message_callback=callBack, auto_ack=True)
-        print("CRAWLER : Waiting for messages. To exit press CTRL+C")
+        print("CRAWLER STARTED \n  Waiting for messages. To exit press CTRL+C")
         channel.start_consuming()
         return True
     except Exception as e:
