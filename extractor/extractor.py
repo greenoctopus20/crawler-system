@@ -20,8 +20,9 @@ def find_element_by_xpath(html_tree, xpath):
             return element_text
     except Exception as E:
         print(f"SOMETHING WRONG {E}")
-    print(f" Couldn't find {xpath}")
+    #print(f" Couldn't find {xpath}")
     return None
+
 
 
 def get_html_from_url(url):
@@ -53,7 +54,6 @@ def save_article(id, title, article_body, url, author=None, date=None ):
 def process(ch, method, properties, body):
     print("Received A message")
     print("***********")
-    # json_data = json.loads(body)
     payload = json.loads(body)
     print(payload)
     print("***********")

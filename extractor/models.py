@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Date, Text, create_engine, inspect
+from sqlalchemy import Column, Integer, String, Date, Text, create_engine, inspect, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
@@ -28,7 +28,7 @@ class articles(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     site_id = Column(Integer)
     url = Column(String(255))
-    extracted_date = Column(Date, default=datetime.now) 
+    extracted_date = Column(DateTime, default=datetime.now) 
     title = Column(String(255))
     author = Column(String(255))
     body = Column(Text) 
@@ -50,7 +50,6 @@ if __name__ == '__main__':
         new_record = articles(
             site_id=1,
             url='https://example.com',
-            extracted_date='2023-12-14',
             title='Sample Title',
             author='John Doe',
             body='Sample body text.',

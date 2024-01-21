@@ -15,6 +15,7 @@ def find_articles(article_xpath: str, html_content: str, domain : str):
     articles_links = []
     page_html = html.fromstring(html_content)
     links = page_html.xpath(article_xpath)
+    #print(links)
     for link in links: 
         if link is not None:
             #link = link.get("href")
@@ -22,12 +23,17 @@ def find_articles(article_xpath: str, html_content: str, domain : str):
                 link = link.get("href")
             #print(type(link))
             if "ElementUnicodeResult" in str(type(link)):
-                link = link.__str__()                
-            if domain not in link:
-                link = domain + link
-                articles_links.append(link)
-            else:
-                articles_links.append(link)
+                link = link.__str__()
+                
+            #if "lxml.html.HtmlElement" in str(type(link)):
+            #    link = link.text
+            #print(link)
+            if link is not None :
+                if domain not in link:
+                    link = domain + link
+                    articles_links.append(link)
+                else:
+                    articles_links.append(link)
     return articles_links
 
 
@@ -46,6 +52,7 @@ def get_html_from_url(url):
         response = requests.get(url)
         response.raise_for_status()  # Raise an error for bad HTTP responses
         html = response.text
+        #print(response.status_code)
         return html
     except requests.exceptions.RequestException as e:
         #print(f"Error: {e}")
@@ -74,7 +81,7 @@ def process(ch, method, properties, body):
         html = get_html_from_url(data['domain_url'])
         save_html(html, body)
         article_links = find_articles(data['article_xpath'], html , data['domain_url'])
-        data['links'] = article_links[:3]
+        data['links'] = article_links[:5]
         message = json.dumps(data)
         print(data)
         produce_message(message)
