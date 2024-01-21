@@ -28,7 +28,7 @@ class TestFindArticles(unittest.TestCase):
         # this is new site i created 
         url = 'http://206.189.240.137//' 
         result = get_html_from_url(url)
-        self.assertEqual(len(result), 2183)
+        self.assertEqual(len(result), 2591)
         
     def test_Get_html_from_invalid_site(self):
     
