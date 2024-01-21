@@ -20,13 +20,17 @@ def articles_per_site(request, id):
     articles_data = getArticles(id)
     site = Site.objects.get(id=id)
     transformed_data = []
-    for article in articles_data:
-        transformed_data.append({
-            "url": article.url,
-            "body": article.body,
-            "author": article.author,
-            "date": article.date
-        })
+    try:
+        for article in articles_data:
+            transformed_data.append({
+                "url": article.url,
+                "title": article.title,
+                "body": article.body,
+                "author": article.author,
+                "date": article.date
+            })
+    except Exception as E:
+        return JsonResponse({"msg" : "something went wrong"}, safe=False, status=500)
     transformed_data.append({"domain" : site.domain_url})
 
     json_object = json.dumps(transformed_data, indent=4)

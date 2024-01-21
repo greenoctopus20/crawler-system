@@ -19,11 +19,15 @@ from django.urls import path
 from users import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    
     path('api/site', views.add_site), # Add site
-    path('api/getSites', views.get_sites),
+    path('api/getSites/<str:username>', views.get_sites),
     path('api/deleteSite/<int:id>', views.deleteSite),
     path('api/runSite/<int:id>', views.runSite),
-    path("api/run", views.run),  # Just a Test
+    #path("api/run", views.run),  # Just a Test
+    
+    path('admin/', admin.site.urls),
+    path('api/user', views.sync_username),
+    path('api/user/delete', views.delete_user)
     
 ]

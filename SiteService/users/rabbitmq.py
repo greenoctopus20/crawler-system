@@ -2,7 +2,7 @@ import pika
 
 def connect():
     try:
-        credentials = pika.PlainCredentials('admin', '6ce1081613ffea9b262f3703475e222047c5c63392aa1a40')
+        credentials = pika.PlainCredentials('admin', 'password')
         parameters = pika.ConnectionParameters('146.190.236.216', 5672, '/', credentials)
         connection = pika.BlockingConnection(parameters)
         return connection.channel()

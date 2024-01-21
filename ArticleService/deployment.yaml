@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: article_service
+  name: article-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: article_service
+      app: article-service
   template:
     metadata:
       labels:
-        app: article_service
+        app: article-service
     spec:
       containers:
-      - name: article_service
+      - name: article-service
         image: ucefpingo/article_service:latest 
         ports:
         - containerPort: 8000
@@ -22,12 +22,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: Article_Service
+  name: article-service-service
 spec:
   selector:
-    app: article_service
+    app: article-service
   ports:
     - protocol: TCP
       port: 80
       targetPort: 8000
-  type: LoadBalancer  # Exposes the service outside the cluster
+  type: LoadBalancer  

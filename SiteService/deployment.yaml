@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: site_service
+  name: site-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: site_service
+      app: site-service
   template:
     metadata:
       labels:
-        app: site_service
+        app: site-service
     spec:
       containers:
-      - name: site_service
+      - name: site-service
         image: ucefpingo/site_service:latest 
         ports:
         - containerPort: 8000
@@ -22,10 +22,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: Site_Service
+  name: siteservice-service
 spec:
   selector:
-    app: site_service
+    app: site-service
   ports:
     - protocol: TCP
       port: 80

@@ -1,6 +1,8 @@
-from sqlalchemy import Column, Integer, String, Date, Text, create_engine
+from sqlalchemy import Column, Integer, String, Date, Text, create_engine, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy import func
+from datetime import datetime
 
 DB_USER = 'doadmin'
 DB_PASSWORD = 'AVNS_VQ6ICJAz3PnxBkncK1e'
@@ -22,7 +24,7 @@ class articles(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     site_id = Column(Integer)
     url = Column(String(255))
-    extracted_date = Column(Date)
+    extracted_date = Column(DateTime, default=datetime.now) 
     title = Column(String(255))
     author = Column(String(255))
     body = Column(Text) 
@@ -31,7 +33,21 @@ class articles(Base):
 existing_tables = Base.metadata.tables
 
 
-def getArticles(siteID):
+
+
+def count_articles(site_id):
     session = Session()
-    data = session.query(articles).filter(articles.site_id == siteID).all()    
-    return data
+    count = session.query(articles).filter(articles.site_id == site_id).count()
+    session.close()
+    return count
+
+
+def get_date_last_extracted(site_id):
+    session = Session()
+    last_extracted_date = (
+        session.query(func.max(articles.extracted_date))
+        .filter(articles.site_id == site_id)
+        .scalar()
+    )
+    session.close()
+    return last_extracted_date

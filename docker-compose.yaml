@@ -1,62 +1,39 @@
-version: '3.8'
+version: '3'
 
 services:
-  db:
-    image: mysql:latest
-    ports:
-      - "3000:3306"
-    environment:
-      MYSQL_DATABASE: backend
-      MYSQL_USER: back_end_user
-      MYSQL_PASSWORD: back_end_user_password_01//@
-      MYSQL_ROOT_PASSWORD: your_mysql_root_password
+  crawler:
+    build:
+      context: .
+      dockerfile: crawler/Dockerfile
+    image: ucefpingo/crawler:latest
     volumes:
-      - mysql_data:/var/lib/mysql
+      - .:/app
 
-  db_crawled:
-    image: mysql:latest
-    ports:
-      - "3001:3306"
-    environment:
-      MYSQL_DATABASE: crawled
-      MYSQL_USER: crawl_user
-      MYSQL_PASSWORD: crawl_user_password_01//-_
-      MYSQL_ROOT_PASSWORD: crawl_root_password  
+  extractor:
+    build:
+      context: .
+      dockerfile: extractor/Dockerfile
+    image: ucefpingo/extractor:latest
     volumes:
-      - mysql_data_crawled:/var/lib/mysql 
+      - .:/app
 
-  db_extracted:
-    image: mysql:latest
+  article_service:
+    build:
+      context: .
+      dockerfile: ArticleService/Dockerfile
     ports:
-      - "3002:3306"
-    environment:
-      MYSQL_DATABASE: extracted
-      MYSQL_USER: user003
-      MYSQL_PASSWORD: user_password_01//-_
-      MYSQL_ROOT_PASSWORD: exctract_root_password  
+      - "8000:8000"
+    image: ucefpingo/article_service:latest
     volumes:
-      - mysql_data_extracted:/var/lib/mysql 
+      - .:/app
 
-  rabbitmq:
-    image: rabbitmq:management
+  site_service:
+    build:
+      context: .
+      dockerfile: SiteService/Dockerfile
     ports:
-      - "5672:5672"
-      - "15672:15672"
-    environment:
-      RABBITMQ_DEFAULT_USER: rabbit_mq_user
-      RABBITMQ_DEFAULT_PASS: rabbit_mq_password
-      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "-rabbitmq_management_agent.disable_metrics_collector=false"
+      - "8000:8000"
+    image: ucefpingo/site_service:latest
     volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
-    networks:
-      - my_custom_network 
-networks:
-  my_custom_network: # Defining a custom network for your services
-    driver: bridge
+      - .:/app
 
-      
-volumes:
-  mysql_data: 
-  mysql_data_crawled:
-  mysql_data_extracted:
-  rabbitmq_data:

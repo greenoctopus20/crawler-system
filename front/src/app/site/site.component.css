@@ -1,0 +1,11 @@
+.containera {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  .export-button {
+    background-color: lightblue;
+    margin: 10px 5cm 10px 20px; /* top right bottom left */
+
+  }

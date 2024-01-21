@@ -7,7 +7,7 @@
           <tr>
             <th>Source</th>
             <th>Articles Extracted</th>
-            <th>Failed Articles</th>
+            
             <th>Last Extracted</th>
             <th>Action</th>
           </tr>
@@ -18,7 +18,7 @@
               <a class="site-link" (click)="navigateToSite(site.id)">{{ site.domain }}</a>
             </td>
             <td>{{ site.articlesExtracted }}</td>
-            <td>{{ site.failedArticles }}</td>
+            
             <td>{{ site.lastExtracted }}</td>
             <td>
               <button class="action-button run-button" (click)="runSite(site.id)">Run</button>

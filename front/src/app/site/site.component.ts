@@ -10,10 +10,31 @@ import { HttpClient } from '@angular/common/http';
 export class SiteComponent implements OnInit {
   siteId!: number;
   domain: string = '';
-  siteArticles: { url: string, body: string, author: string, date: string }[] = [];
+  siteArticles: { url: string, body: string, title: string, author: string, date: string }[] = [];
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
+  exportData(): void {
+    // Combine the header and data arrays
+    const dataToExport = [
+      ['URL', 'title', 'body', 'author', 'date'],
+      ...this.siteArticles.map(article => [article.url, article.title, article.body, article.author, article.date])
+    ];
+  
+    // Convert the array to CSV format
+    const csvContent = dataToExport.map(row => row.join(',')).join('\n');
+  
+    // Create a Blob from the CSV content
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  
+    // Create a link element and trigger the download
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'exported_data.csv';
+    link.click();
+  }
+
+  
   ngOnInit(): void {
     // Retrieve 'id' parameter from the route
     this.route.params.subscribe(params => {
@@ -45,6 +66,7 @@ export class SiteComponent implements OnInit {
                 return {
                     url: item.url,
                     body: item.body,
+                    title: item.title,
                     author: item.author,
                     date: item.date
                 };

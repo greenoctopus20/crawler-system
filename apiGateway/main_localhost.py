@@ -16,9 +16,10 @@ CORS(app)
 BACKEND_SERVICES = {
     'site': 'http://127.0.0.1:8000',
     'getSites': 'http://127.0.0.1:8000',
-    'articles': 'http://127.0.0.1:8000',
+    'articles': 'http://127.0.0.1:8001',
     'runSite': 'http://127.0.0.1:8000',
     'deleteSite': 'http://127.0.0.1:8000',
+    'user': 'http://127.0.0.1:8000',
 }
 
 @app.route('/api/<service>/<path:subpath>', methods=['GET', 'POST'])

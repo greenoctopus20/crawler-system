@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
       - name: news-site-container
-        image: ucefpingo/news-site 
+        image: ucefpingo/news-site:1
+        imagePullPolicy: Always  # Set the image pull policy to Always
         ports:
         - containerPort: 9000
 

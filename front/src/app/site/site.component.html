@@ -1,11 +1,21 @@
-<div class="container">
+<div class="containera" *ngIf="siteArticles.length > 0; else noArticles">
+    <br>
+    <button class="export-button" (click)="exportData()">Export</button>
+  </div>
+  
+  <ng-template #noArticles>
+    <div class="container">
+        <br><br>
+      <h4>No articles yet, Run the site</h4>
+    </div>
+  </ng-template>
+  
+  <div class="container" *ngIf="siteArticles.length > 0">
     <br>
     <div class="site-info">
       <h2>Extracted Articles</h2>
       <br>
       <p><strong>Domain : </strong> <a [href]="domain" target={{domain}}>{{ domain }}</a></p>
-
-
       <br>
     </div>
   
@@ -13,13 +23,14 @@
       <h4>Extracted Articles</h4>
       <div *ngFor="let article of siteArticles" class="card mb-3">
         <div class="card-body">
-            <a href="{{ article.url }}" target="_blank">
-                <h5 class="card-title">Article URL: {{ article.url }}</h5>
-            </a>
-            <br>
-          <p class="card-text">Article Body: {{ article.body }}</p>
-          <p class="card-text">Article Author: {{ article.author }}</p>
-          <p class="card-text">Article Date: {{ article.date }}</p>
+          <a href="{{ article.url }}" target="_blank">
+            <h5 class="card-title">Article Url:  {{ article.url }}</h5>
+          </a>
+          <br>
+          <p class="card-text"> <b>Article Title :</b><br> {{ article.title }}</p>
+          <p class="card-text"><b>Article Body:</b><br> {{ article.body }}</p>
+          <p class="card-text"><b>Article Author: </b><br> {{ article.author }}</p>
+          <p class="card-text"><b>Article Date:</b><br> {{ article.date }}</p>
         </div>
       </div>
     </div>
