@@ -26,7 +26,7 @@ class TestFindArticles(unittest.TestCase):
         
     def test_Get_html_from_domain(self):
         # this is new site i created 
-        url = 'http://206.189.240.137//' 
+        url = 'http://206.189.240.137' 
         result = get_html_from_url(url)
         self.assertEqual(len(result), 2591)
         
